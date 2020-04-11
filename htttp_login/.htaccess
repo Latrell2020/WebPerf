@@ -1,0 +1,6 @@
+AuthType Basic
+AuthName "Restricted Files test"
+# (Following line optional)
+AuthBasicProvider file
+AuthUserFile "/usr/local/apache2/passwd/passwords"
+Require user useripl

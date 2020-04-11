@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://w1.col.ip-label.net/Data/ajax1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <title>Ajax Example</title>
+
+        <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+        <style>
+          body {padding: 8px;}
+
+          .hidden {
+            display: none;
+          }
+          .glyphicon.fast-right-spinner {
+              -webkit-animation: glyphicon-spin-r 1s infinite linear;
+              animation: glyphicon-spin-r 1s infinite linear;
+          }
+
+          @-webkit-keyframes glyphicon-spin-r {
+              0% {
+                  -webkit-transform: rotate(0deg);
+                  transform: rotate(0deg);
+              }
+
+              100% {
+                  -webkit-transform: rotate(359deg);
+                  transform: rotate(359deg);
+              }
+          }
+        </style>
+        
+            <script type="text/javascript">
+            // Initialize RUMBI configuration
+            //var rumbiConf={id:"ip-label",v:0 , performancetiming:1, i:9};
+            var rumbiConf={id:"ip-label",v:0 , performancetiming:1 };
+            //var rumbiConf={id:"ip-label", v:0, observerstart: new Date()};
+            //var ipldevmod = 1;          
+            rumbiConf.CLOBSDEBUG_ipln = 1;
+            
+            //Set up custom variables
+            //http://wikipl.ip-label.com/RUM_BI/Custom_dims%3A_auto-feed
+            //old var iplcustomdim="test";
+            rumbiConf.customdim = "test";           
+            rumbiConf.business = "OVH";
+            rumbiConf.abtesting = "0.2";
+            rumbiConf.infrastructure = "preprod";
+            rumbiConf.customer = "@_@Dimitri";
+            </script>
+    </head>
+    <body>
+        <h1>Ajax Example</h1>
+        <ul class="nav nav-tabs">
+          <li role="presentation" class="active" data-target="home"><a href="#">
+            <span class="glyphicon glyphicon-refresh fast-right-spinner hidden"></span> Home
+          </a></li>
+          <li role="presentation" data-target="profile"><a href="#">
+            <span class="glyphicon glyphicon-refresh fast-right-spinner gly-spin hidden"></span> Profile
+          </a></li>
+          <li role="presentation" data-target="messages"><a href="#">
+            <span class="glyphicon glyphicon-refresh fast-right-spinner gly-spin hidden"></span> Messages
+          </a></li>
+          <li role="presentation" data-target="FCT2_getSouscripteur"><a href="#">
+            <span class="glyphicon glyphicon-refresh fast-right-spinner gly-spin hidden"></span> FCT2_getSouscripteur
+          </a></li>
+        </ul>
+        <div id="home" class="tab-panel">
+          <h2>Home</h2>
+          <a href="#">Link test</a>
+        </div>
+        <div id="profile" class="tab-panel hidden">
+          <h2>Profile</h2>
+        </div>
+        <div id="messages" class="tab-panel hidden">
+          <h2>Messages</h2>
+        </div>
+        <script type="text/javascript">
+
+            // Custom demo code to change tabs
+            $("li").click(function(evt){
+              var el = this;
+              var pageName = $(el).data("target")
+              console.log("load", pageName, ", simulate waiting time")
+
+              console.log("start CLOBS timer")
+              clobs.startTimer(pageName) // Start measuring loading time
+
+              showLoadingIcon(pageName)
+
+              // Simulate async wait time
+              setTimeout(function(){
+                setActiveTab(pageName)
+
+                // Finished fake loading and display data
+                console.log("stop CLOBS timer")
+                clobs.stopTimer(pageName) // Stop measuring loading time
+              }, 1500)
+            })
+
+            function showLoadingIcon(pageName){
+              $("[data-target='" + pageName + "']").find(".glyphicon").removeClass("hidden")
+            }
+
+            function setActiveTab(pageName){
+              $("li").find(".glyphicon").addClass("hidden")
+              $(".tab-panel").addClass("hidden")
+              $("#" + pageName).removeClass("hidden")
+              $("li").removeClass("active")
+              $("[data-target='" + pageName + "']").addClass("active")
+            }
+        </script>
+        
+        <!-- clobs script -->
+        <script id="clobscript" type="text/javascript" src="clobs.min.js">    </script>
+        
+        
+    </body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+
+<title>ip-label Console</title>
+
+<link rel="stylesheet" type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+
+<body class="home two-column">
+
+<ul id="console" class="list-group">
+
+</ul>
+
+
+
+</body>
+
+<script type="text/javascript">
+
+var Monitors = [];
+
+function GetMonitors(content) {
+
+     //console.log(content.Ipln_WS_REST_datametrie.Get_Monitors );
+     
+     $.each(content.Ipln_WS_REST_datametrie.Get_Monitors, function(idx, elem) {
+        //console.log("Main = " + idx + ":" + elem);
+        
+        if (typeof elem === 'object') {
+          idcontrat = 0;
+          name = "";
+          status = "";
+           
+          $.each(elem, function(key, value) {
+           //console.log(key + ":" + value);
+           if (key == "IDCONTRAT") 
+             idcontrat = value;
+           if (key == "NOMCONTRAT") 
+             name = value;   
+           if (key == "ETATCONTRAT")
+             status = value;               
+          });
+        
+          if (status == "PROCESSING")
+            Monitors[idcontrat] = name; 
+        } 
+                 
+     } );
+
+}
+
+function UpdateMonitors(content) {
+           
+     
+     //Scan Get_Status_All_Monitors JSON  
+     $.each(content.Ipln_WS_REST_datametrie.Get_Status_All_Monitors, function(idx, elem) {
+         console.log("Update " + idx + ":" + elem);
+         if (typeof elem === 'object') {
+         
+          //Add monitor to list
+          $('#console').append($('<li>', {
+            //text: name,
+            text: Monitors[elem.IDCONTRAT],
+            class: ((elem.TYPEALARME == "BLACK") || (elem.TYPEALARME == "RED")) ? "list-group-item list-group-item-danger" : "list-group-item list-group-item-success"  
+          }));
+ 
+        }  
+          
+      });
+     
+
+}
+
+
+function Refresh() {
+  
+    $('#console').empty();
+    
+    $.ajax({ 
+         type: 'GET', 
+         url: 'http://vps26264.ovh.net/Get_Status_All_Monitors.json', 
+         //Do not get json file from cache!
+         cache: false,
+         success: function (data) { 
+           //console.log("Success");
+           UpdateMonitors(data);       
+         }
+    });
+
+}
+
+
+jQuery(document).ready(function($){
+
+  //Get monitor List
+  $.ajax({ 
+      type: 'GET', 
+      url: 'http://vps26264.ovh.net/Get_Monitors.json', 
+      //Do not get json file from cache!
+      cache: false,
+      success: function (data) { 
+          GetMonitors(data);
+          Refresh();
+      }
+    });
+    
+  //start Refreshing console
+  setInterval(Refresh, 30000);
+    
+});
+
+
+</script>
+
+</html>
+
+
+
+

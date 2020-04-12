@@ -1,0 +1,12 @@
+{
+    "name": "moi/app",
+    "require": {
+        "php": ">=5.3"
+    },
+    "authors": [
+        {
+            "name": "Dimitri",
+            "email": "dmo@ip-label.com"
+        }
+    ]
+}

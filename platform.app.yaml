@@ -1,0 +1,9 @@
+web:
+    #commands:
+    #    start: php run.php
+    upstream:
+            socket_family: tcp
+            protocol: http
+            
+            
+            

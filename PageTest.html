@@ -320,7 +320,8 @@
 </div>
 <!-- #primary -->
 
-
+    <div id="divadded"></div>
+    
 	</div><!-- #main -->
 	
 	<div class="clear"></div>
@@ -351,18 +352,24 @@ function add_tag() {
   var divhtml = "<div id='" + divtag + "' style='heigh:300px;width=200px;'></div>" ;
   //console.log(divtag);
   $("#top-links-nav").append( divhtml );
-  $("#" + divtag).append( "<img id='imgadded' src='http://vps26264.ovh.net/IPL/PageTest_fichiers/screen2.png'></img>" );
+  $("#" + divtag).append( "<img id='imgadded' src='http://stevesouders.com/bin/sleep.cgi?type=gif&sleep=2&expires=-1&last=0&imagenum=1&t=1587196107'></img>" );
 }
-  
 
-$( window ).load(function() {
-
-  //HTTP GET SYNCHRONE (async=false)
-  jQuery.ajax({
-         //url:    'http://vps26264.ovh.net/PageTest_fichiers/slide-2-2.jpg',
-         url:    'http://vps26264.ovh.net/IPL/PageTest_fichiers/IMAG0125.jpg',
+//Image load
+jQuery.ajax({
+         url:    'http://stevesouders.com/bin/sleep.cgi?type=gif&sleep=2&expires=-1&last=0&imagenum=2&t=1587196107',
          success: function(result) {},
          async:   false
+});
+    
+
+//Code executed after page load
+$( window ).load(function() {
+
+  //HTTP GET (async=false)
+  jQuery.ajax({
+         url:    'http://stevesouders.com/bin/sleep.cgi?type=gif&sleep=2&expires=-1&last=0&imagenum=3&t=1587196107',
+         success: function(result) {}
   });
 
   //HTTP GET - This is a shorthand Ajax function
@@ -372,7 +379,7 @@ $( window ).load(function() {
   });*/
   
   //$("#top-links-nav").append( "<div id='divadded' style='heigh:300px;width=200px;'></div>" );
-  //$("#divadded").append( "<img id='imgadded' src='http://vps26264.ovh.net/PageTest_fichiers/screen2.png'></img>" );
+  $("#divadded").append( "<img id='imgadded' src='http://stevesouders.com/bin/sleep.cgi?type=gif&sleep=2&expires=-1&last=0&imagenum=4&t=1587196107'></img>" );
 
   //Code DMO
   //setTimeout(add_tag, 5000);
